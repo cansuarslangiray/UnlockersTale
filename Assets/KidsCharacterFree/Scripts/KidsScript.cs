@@ -32,7 +32,7 @@ public class KidsScript : MonoBehaviour
   //---------------------------WALK------------------------------------------
   private void Walk()
   {
-    bool wKeyPressed = Input.GetKey(KeyCode.W);
+    bool wKeyPressed = Input.GetKey("w");
 
     if (wKeyPressed)
     {
