@@ -7,19 +7,24 @@ public class KidsScript : MonoBehaviour
   private Animator animator;
   
   public float walkSpeed = 2.0f;
-  public float turnSpeed = 100.0f;
+  public float turnSpeed = 1.5f;
+  [SerializeField] private float runSpeed = 5f;
   private float horizontalInput;
+  private CharacterController _controller;
 
   void Start()
   {
-    animator = this.GetComponent<Animator>();
-    
+    animator = transform.GetComponent<Animator>();
+    _controller = transform.GetComponent<CharacterController>();
+
   }
 
   void Update()
   {
     Walk();
     Run();
+    Turn();
+    GoBack();
   }
   
   
@@ -27,12 +32,12 @@ public class KidsScript : MonoBehaviour
   //---------------------------WALK------------------------------------------
   private void Walk()
   {
-    bool wKeyPressed = Input.GetKey("w");
+    bool wKeyPressed = Input.GetKey(KeyCode.W);
 
     if (wKeyPressed)
     {
-      animator.SetBool("isWalking", true); 
-      Turn();
+      animator.SetBool("isWalking", true);
+      _controller.Move(transform.forward * walkSpeed * Time.deltaTime);
     }
 
     // when player stops pressing w key character will turn back to idle animation
@@ -46,11 +51,12 @@ public class KidsScript : MonoBehaviour
   // This code snippet will be modified
   private void Run()
   {
-    bool runKeyPressed = Input.GetKey("z");
+    bool runKeyPressed = Input.GetKey(KeyCode.Z);
 
     if(runKeyPressed)
     {
       animator.SetBool("isRunning", true);
+      _controller.Move(transform.forward * runSpeed * Time.deltaTime);
     }
 
     // when player stops pressing z key character will make transition to idle animation
@@ -62,17 +68,31 @@ public class KidsScript : MonoBehaviour
 
   private void Turn()
   {
-    if (Input.GetKey("a"))
+    if (Input.GetKey(KeyCode.A))
     {
       // turn left
-      transform.Rotate(Vector3.up, -turnSpeed * Time.deltaTime);
+      transform.Rotate(0, 90 * Time.deltaTime,0);
+
     }
-    else if (Input.GetKey("d"))
+    else if (Input.GetKey(KeyCode.D))
     {
       // turn right
-      transform.Rotate(Vector3.up, turnSpeed * Time.deltaTime);
+      transform.Rotate(0, -90 * Time.deltaTime,0);
     }
   }
+
+  private void GoBack()
+  {
+
+    if(Input.GetKey(KeyCode.S))
+    {
+      transform.Rotate(0, -180 * Time.deltaTime,0);
+
+    }
+
+  }
+
+
   
 }
 
