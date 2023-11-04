@@ -21,17 +21,16 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (SceneManager.GetActiveScene().name == "Level2")
-        {
-            gameObject.GetComponent<KidsScript>().enabled = false;
-            gameObject.GetComponent<Player>().enabled = true;
-
-        }
-
         _playerCharacterController = GetComponent<CharacterController>();
         _timer = 0;
         _currentSpeed = initialSpeed;
         _playerAnimator = GetComponent<Animator>();
+        if (SceneManager.GetActiveScene().name == "Level2")
+        {
+            gameObject.GetComponent<KidsScript>().enabled = false;
+            gameObject.GetComponent<Player>().enabled = true;
+            _playerAnimator.SetBool("isRunning", true);
+        }
     }
 
     // Update is called once per frame
@@ -52,7 +51,6 @@ public class Player : MonoBehaviour
         }
 
         _playerCharacterController.Move(transform.forward * _currentSpeed * Time.deltaTime);
-        _playerAnimator.SetBool("isRunning", true);
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             TurnLeft();
