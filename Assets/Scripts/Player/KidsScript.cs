@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class KidsScript : MonoBehaviour
 {
   private Animator animator;
-  
+
   public float walkSpeed = 2.0f;
   public float turnSpeed = 1.5f;
   [SerializeField] private float runSpeed = 5f;
@@ -19,6 +19,7 @@ public class KidsScript : MonoBehaviour
     {
       gameObject.GetComponent<Player>().enabled = false;
     }
+
     animator = transform.GetComponent<Animator>();
     _controller = transform.GetComponent<CharacterController>();
 
@@ -29,11 +30,11 @@ public class KidsScript : MonoBehaviour
     Walk();
     Run();
     Turn();
-    TurnAndMove();
+    //TurnAndMove();
   }
-  
-  
-  
+
+
+
   //---------------------------WALK------------------------------------------
   private void Walk()
   {
@@ -48,7 +49,7 @@ public class KidsScript : MonoBehaviour
     }
 
     // when player stops pressing w key character will turn back to idle animation
-    if(!wKeyPressed)
+    if (!wKeyPressed)
     {
       animator.SetBool("isWalking", false);
     }
@@ -60,7 +61,7 @@ public class KidsScript : MonoBehaviour
   {
     bool runKeyPressed = Input.GetKey(KeyCode.Z);
 
-    if(runKeyPressed)
+    if (runKeyPressed)
     {
       animator.SetBool("isRunning", true);
       Turn();
@@ -74,27 +75,42 @@ public class KidsScript : MonoBehaviour
     }
   }
 
-  private void TurnAndMove()
+  private void Turn()
   {
     if (Input.GetKey(KeyCode.A))
     {
-      _controller.Move(-transform.right * walkSpeed * Time.deltaTime);
+      // turn left
+      transform.Rotate(0, -90 * Time.deltaTime, 0);
 
     }
     else if (Input.GetKey(KeyCode.D))
     {
-      _controller.Move( transform.right* walkSpeed * Time.deltaTime);
-
+      // turn right
+      transform.Rotate(0, 90 * Time.deltaTime, 0);
     }
-  }
-  private void Turn()
-  {
-    float pos = Input.GetAxis("Mouse X");
-    transform.Rotate(0, pos * Time.deltaTime*turnSpeed, 0);
 
-  }
-
-
+    /*private void TurnAndMove()
+    {
+      if (Input.GetKey(KeyCode.A))
+      {
+        _controller.Move(-transform.right * walkSpeed * Time.deltaTime);
   
+      }
+      else if (Input.GetKey(KeyCode.D))
+      {
+        _controller.Move( transform.right* walkSpeed * Time.deltaTime);
+  
+      }
+    }
+    private void Turn()
+    {
+      float pos = Input.GetAxis("Mouse X");
+      transform.Rotate(0, pos * Time.deltaTime*turnSpeed, 0);
+  
+    }*/
+
+
+
+  }
 }
 
