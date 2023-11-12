@@ -42,7 +42,9 @@ public class KidsScript : MonoBehaviour
     if (wKeyPressed)
     {
       animator.SetBool("isWalking", true);
+      Turn();
       _controller.Move(transform.forward * walkSpeed * Time.deltaTime);
+
     }
 
     // when player stops pressing w key character will turn back to idle animation
@@ -61,6 +63,7 @@ public class KidsScript : MonoBehaviour
     if(runKeyPressed)
     {
       animator.SetBool("isRunning", true);
+      Turn();
       _controller.Move(transform.forward * runSpeed * Time.deltaTime);
     }
 
@@ -76,13 +79,13 @@ public class KidsScript : MonoBehaviour
     if (Input.GetKey(KeyCode.A))
     {
       // turn left
-      transform.Rotate(0, 90 * Time.deltaTime,0);
+      transform.Rotate(0, -90 * Time.deltaTime,0);
 
     }
     else if (Input.GetKey(KeyCode.D))
     {
       // turn right
-      transform.Rotate(0, -90 * Time.deltaTime,0);
+      transform.Rotate(0, 90 * Time.deltaTime,0);
     }
   }
 
