@@ -29,6 +29,7 @@ public class KidsScript : MonoBehaviour
     Walk();
     Run();
     Turn();
+    TurnAndMove();
   }
   
   
@@ -73,21 +74,19 @@ public class KidsScript : MonoBehaviour
     }
   }
 
-  /*private void Turn()
+  private void TurnAndMove()
   {
     if (Input.GetKey(KeyCode.A))
     {
-      // turn left
-      transform.Rotate(0, -90 * Time.deltaTime,0);
-
+      _controller.Move(-transform.right * walkSpeed * Time.deltaTime);
 
     }
     else if (Input.GetKey(KeyCode.D))
     {
-      // turn right
-      transform.Rotate(0, 90 * Time.deltaTime, 0);
+      _controller.Move( transform.right* walkSpeed * Time.deltaTime);
+
     }
-  }*/
+  }
   private void Turn()
   {
     float pos = Input.GetAxis("Mouse X");
