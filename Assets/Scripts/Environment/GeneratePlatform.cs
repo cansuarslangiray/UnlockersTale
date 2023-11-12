@@ -10,17 +10,22 @@ public class GeneratePlatform : MonoBehaviour
     [SerializeField] private int secNumber;
     [SerializeField] private GameObject player;
     [SerializeField] private float playerPosition;
+    [SerializeField] private GameObject[] vehiclePrefabs;
     public GameObject destroyGameObject;
+    public GameObject destoyObsticel;
+    public float leftBound = -20f;
+    public float rightBound = 20f;
     private bool _isCompleted;
     private int _loopCounter = 0;
+    private int _index;
+
 
 
     void Update()
     {
         if (!_isCompleted)
         {
-            UpdatePlatform();
-        }
+            UpdatePlatform(); }
     }
 
     private void GenerateSection()
@@ -30,6 +35,7 @@ public class GeneratePlatform : MonoBehaviour
         var platform = Instantiate(section[secNumber], new Vector3(0, 0, zPosition), Quaternion.identity);
         platform.transform.SetParent(destroyGameObject.transform);
         Destroy(destroyGameObject.transform.GetChild(0).gameObject);
+        SpawnRandomVehicle(zPosition);
     }
 
     private void UpdatePlatform()
@@ -45,6 +51,19 @@ public class GeneratePlatform : MonoBehaviour
         {
             _isCompleted = true;
         }
+    }
+
+    private void CreatingObsticle()
+    {
+        
+    }
+
+    private void SpawnRandomVehicle(int zAxis)
+    {
+        _index = Random.Range(0, vehiclePrefabs.Length);
+        Vector3 spawnPos = new Vector3(Random.Range(leftBound, rightBound), 0, zAxis);
+        Instantiate(vehiclePrefabs[_index], spawnPos, Quaternion.Euler(0, 180, 0));
+        
     }
 }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
     private CharacterController _playerCharacterController;
     private Animator _playerAnimator;
     private bool _canTurnAgain;
+    [SerializeField] private float levelLoadDelay = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -75,5 +77,20 @@ public class Player : MonoBehaviour
         {
             _playerCharacterController.Move(Vector3.right * leftRightSpeed * Time.deltaTime);
         }
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        
+        if (hit.gameObject.CompareTag("Obsticle"))
+        {
+            LoadLevelAgain();
+        }
+    }
+
+    private void LoadLevelAgain()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
     }
 }
