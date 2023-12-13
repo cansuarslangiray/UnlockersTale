@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class GeneratePlatform : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class GeneratePlatform : MonoBehaviour
     private bool _isCompleted;
     private int _loopCounter = 0;
     private int _index;
+    public GameObject CoinText;
 
 
 
@@ -25,7 +27,10 @@ public class GeneratePlatform : MonoBehaviour
     {
         if (!_isCompleted)
         {
-            UpdatePlatform(); }
+            UpdatePlatform();
+        }
+
+        CoinText.GetComponent<Text>().text = Player.Coins.ToString();
     }
 
     private void GenerateSection()
@@ -35,7 +40,7 @@ public class GeneratePlatform : MonoBehaviour
         var platform = Instantiate(section[secNumber], new Vector3(0, 0, zPosition), Quaternion.identity);
         platform.transform.SetParent(destroyGameObject.transform);
         Destroy(destroyGameObject.transform.GetChild(0).gameObject);
-        SpawnRandomVehicle(zPosition);
+       // SpawnRandomVehicle(zPosition);
     }
 
     private void UpdatePlatform()

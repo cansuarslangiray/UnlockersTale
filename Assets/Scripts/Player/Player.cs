@@ -8,6 +8,7 @@ using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
+    public static int Coins = 0;
     public float initialSpeed = 5.0f;
     public float speedIncreaseInterval = 50.0f; // How often to increase speed.
     public float speedIncreaseAmount = 1.0f;
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour
     private Animator _playerAnimator;
     private bool _canTurnAgain;
     [SerializeField] private float levelLoadDelay = 1f;
+    public GameObject deadTexture;
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +54,8 @@ public class Player : MonoBehaviour
             _timer = 0f;
         }
 
+        leftRightSpeed = _currentSpeed + 1;
+
         _playerCharacterController.Move(transform.forward * _currentSpeed * Time.deltaTime);
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
@@ -81,16 +85,22 @@ public class Player : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        
         if (hit.gameObject.CompareTag("Obsticle"))
         {
-            LoadLevelAgain();
+            hit.transform.GetComponent<Car>().speed = 0;
+            transform.GetComponent<CharacterController>().enabled = false;
+            deadTexture.SetActive(true);
+            //  Time.timeScale = 0f;
+            Invoke("LoadLevelAgain", 1.0f);
         }
     }
 
     private void LoadLevelAgain()
     {
+        deadTexture.SetActive(false);
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        transform.GetComponent<CharacterController>().enabled = true;
+
         SceneManager.LoadScene(currentSceneIndex);
     }
 }
