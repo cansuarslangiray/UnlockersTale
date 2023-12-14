@@ -9,12 +9,11 @@ using UnityEngine.Serialization;
 public class Player : MonoBehaviour
 {
     public static int Coins = 0;
-    public float initialSpeed = 5.0f;
-    public float speedIncreaseInterval = 50.0f; // How often to increase speed.
+    public float speedIncreaseInterval = 5.0f; // How often to increase speed.
     public float speedIncreaseAmount = 1.0f;
     public float maxPlayerSpeed = 25.0f;
     public float leftRightSpeed = 4f;
-    private float _currentSpeed;
+    public float _currentSpeed;
     private float _timer;
     private CharacterController _playerCharacterController;
     private Animator _playerAnimator;
@@ -27,7 +26,7 @@ public class Player : MonoBehaviour
     {
         _playerCharacterController = GetComponent<CharacterController>();
         _timer = 0;
-        _currentSpeed = initialSpeed;
+        _currentSpeed = 3f;
         _playerAnimator = GetComponent<Animator>();
         if (SceneManager.GetActiveScene().name == "Level2")
         {
@@ -45,16 +44,16 @@ public class Player : MonoBehaviour
 
     private void Movement()
     {
-        _timer = Time.deltaTime;
+        _timer += Time.deltaTime ;
         if (_timer >= speedIncreaseInterval)
         {
             _currentSpeed += speedIncreaseAmount;
-
+            
             _currentSpeed = Mathf.Min(_currentSpeed, maxPlayerSpeed);
+            Debug.Log(_currentSpeed +"speed aşıldı");
             _timer = 0f;
         }
 
-        leftRightSpeed = _currentSpeed + 1;
 
         _playerCharacterController.Move(transform.forward * _currentSpeed * Time.deltaTime);
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
