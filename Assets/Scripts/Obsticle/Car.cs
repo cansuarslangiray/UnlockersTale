@@ -7,7 +7,7 @@ public class Car : MonoBehaviour
 {
     public GameObject player;
     public float speed = 5f;
-    public float speedIncreaseInterval = 50.0f;
+    private float speedIncreaseInterval = 10.0f;
     public float speedIncreaseAmount = 1.0f;
     public float maxSpeed = 45.0f;
     private float _timer;
