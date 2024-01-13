@@ -15,22 +15,27 @@ public class MazeRunner : MonoBehaviour
   private CharacterController _controller;
 
 //**********************************************
-  [SerializeField] private Image fillImage;
-  [SerializeField] private Text timeText;
+  public Image fillImage;
+  public int countdownTime;
+  public Text countDownDisplay;
 
-    public int duration;
+  public GameObject gameOverPanel;
 
-    private int remainingDuration;
+  
 //********************************************************
   void Start()
   {
     if (SceneManager.GetActiveScene().name == "Level3")
     {
       gameObject.GetComponent<Player>().enabled = false;
+      gameObject.GetComponent<KidsScript>().enabled = false;
     }
-    //Begin(duration);
+    StartCoroutine(CountDownToEnd());
+
     animator = transform.GetComponent<Animator>();
     _controller = transform.GetComponent<CharacterController>();
+
+    
 
   }
 
@@ -41,26 +46,28 @@ public class MazeRunner : MonoBehaviour
     Turn();
     //TurnAndMove();
   }
-  /*
-  private void Begin(int second){
-        remainingDuration = second;
-        StartCoroutine(UpdateTimer());
+  
+  IEnumerator CountDownToEnd(){
+    while (countdownTime > 0)
+    {
+      countDownDisplay.text = countdownTime.ToString();
+      yield return new WaitForSeconds(1f);
+
+      countdownTime--;
+    }
+
+    countDownDisplay.text = "0";
+    gameOverPanel.SetActive(true);
+
+
+    yield return new WaitForSeconds(1f);
+    
+    int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+    SceneManager.LoadScene(currentSceneIndex);
   }
 
-  private IEnumerator UpdateTimer(){
-      while(remainingDuration > 0){
-          timeText.text = $"{remainingDuration}";
-          fillImage.fillAmount = Mathf.InverseLerp(0, duration, remainingDuration / (float) duration);
-          remainingDuration--;
-          yield return new WaitForSeconds(1f);
-        }
-        OnEnd();
-    }
 
-    private void OnEnd(){ // this method can be used if we want to do something at the end
-
-    }
-    */
+    
 
   //---------------------------WALK------------------------------------------
   private void Walk()

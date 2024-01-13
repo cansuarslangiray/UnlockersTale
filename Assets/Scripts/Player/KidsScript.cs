@@ -15,9 +15,10 @@ public class KidsScript : MonoBehaviour
 
   void Start()
   {
-    if (SceneManager.GetActiveScene().name == "Level1")
+    if (SceneManager.GetActiveScene().name == "Room")
     {
       gameObject.GetComponent<Player>().enabled = false;
+      gameObject.GetComponent<KidsScript>().enabled = true;
     }
 
     animator = transform.GetComponent<Animator>();
