@@ -14,15 +14,13 @@ public class MazeRunner : MonoBehaviour
   private float horizontalInput;
   private CharacterController _controller;
 
-//**********************************************
   public Image fillImage;
   public int countdownTime;
   public Text countDownDisplay;
-
   public GameObject gameOverPanel;
-
+  private bool continueCountDown = true;
   
-//********************************************************
+
   void Start()
   {
     if (SceneManager.GetActiveScene().name == "Level3")
@@ -35,8 +33,6 @@ public class MazeRunner : MonoBehaviour
     animator = transform.GetComponent<Animator>();
     _controller = transform.GetComponent<CharacterController>();
 
-    
-
   }
 
   void Update()
@@ -44,29 +40,35 @@ public class MazeRunner : MonoBehaviour
     Walk();
     Run();
     Turn();
-    //TurnAndMove();
   }
   
   IEnumerator CountDownToEnd(){
-    while (countdownTime > 0)
+    while (countdownTime > 0 && continueCountDown) 
     {
       countDownDisplay.text = countdownTime.ToString();
       yield return new WaitForSeconds(1f);
 
       countdownTime--;
     }
-
-    countDownDisplay.text = "0";
-    gameOverPanel.SetActive(true);
-
-
-    yield return new WaitForSeconds(1f);
     
-    int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-    SceneManager.LoadScene(currentSceneIndex);
+    countDownDisplay.text = countdownTime.ToString();
+
+    if (continueCountDown)
+    {
+      gameOverPanel.SetActive(true);
+
+      yield return new WaitForSeconds(1f);
+    
+      int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+      SceneManager.LoadScene(currentSceneIndex);
+    }
+    
   }
 
-
+  public void StopCountdown() 
+{
+    continueCountDown = false;
+}
     
 
   //---------------------------WALK------------------------------------------

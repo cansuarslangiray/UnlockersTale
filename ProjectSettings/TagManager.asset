@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Obsticle
   - Coin
+  - Door
   layers:
   - Default
   - TransparentFX
