@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MazeRunner : MonoBehaviour
 {
@@ -13,13 +14,21 @@ public class MazeRunner : MonoBehaviour
   private float horizontalInput;
   private CharacterController _controller;
 
+//**********************************************
+  [SerializeField] private Image fillImage;
+  [SerializeField] private Text timeText;
+
+    public int duration;
+
+    private int remainingDuration;
+//********************************************************
   void Start()
   {
     if (SceneManager.GetActiveScene().name == "Level3")
     {
       gameObject.GetComponent<Player>().enabled = false;
     }
-
+    //Begin(duration);
     animator = transform.GetComponent<Animator>();
     _controller = transform.GetComponent<CharacterController>();
 
@@ -32,8 +41,26 @@ public class MazeRunner : MonoBehaviour
     Turn();
     //TurnAndMove();
   }
+  /*
+  private void Begin(int second){
+        remainingDuration = second;
+        StartCoroutine(UpdateTimer());
+  }
 
+  private IEnumerator UpdateTimer(){
+      while(remainingDuration > 0){
+          timeText.text = $"{remainingDuration}";
+          fillImage.fillAmount = Mathf.InverseLerp(0, duration, remainingDuration / (float) duration);
+          remainingDuration--;
+          yield return new WaitForSeconds(1f);
+        }
+        OnEnd();
+    }
 
+    private void OnEnd(){ // this method can be used if we want to do something at the end
+
+    }
+    */
 
   //---------------------------WALK------------------------------------------
   private void Walk()
@@ -56,7 +83,7 @@ public class MazeRunner : MonoBehaviour
   }
 
   // --------------------------------RUN-------------------------------------------------
-  // This code snippet will be modified
+  
   private void Run()
   {
     bool runKeyPressed = Input.GetKey(KeyCode.Z);
@@ -88,28 +115,6 @@ public class MazeRunner : MonoBehaviour
       // turn right
       transform.Rotate(0, 90 * Time.deltaTime, 0);
     }
-
-    /*private void TurnAndMove()
-    {
-      if (Input.GetKey(KeyCode.A))
-      {
-        _controller.Move(-transform.right * walkSpeed * Time.deltaTime);
-  
-      }
-      else if (Input.GetKey(KeyCode.D))
-      {
-        _controller.Move( transform.right* walkSpeed * Time.deltaTime);
-  
-      }
-    }
-    private void Turn()
-    {
-      float pos = Input.GetAxis("Mouse X");
-      transform.Rotate(0, pos * Time.deltaTime*turnSpeed, 0);
-  
-    }*/
-
-
 
   }
 }
