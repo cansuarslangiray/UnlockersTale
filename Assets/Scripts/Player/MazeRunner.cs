@@ -66,11 +66,11 @@ public class MazeRunner : MonoBehaviour
   }
 
   public void StopCountdown() 
-{
+  {
     continueCountDown = false;
-}
+  }
     
-
+  
   //---------------------------WALK------------------------------------------
   private void Walk()
   {

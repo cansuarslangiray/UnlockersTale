@@ -131,7 +131,7 @@ public class Player : MonoBehaviour
 
     public void NextLevel()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
     }
 
     public void TryAgain()

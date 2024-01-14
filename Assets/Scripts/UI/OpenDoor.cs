@@ -10,6 +10,7 @@ public class OpenDoor : MonoBehaviour
     private PlayerInventory playerInventory;
     public MazeRunner mazeRunner;
     public GameObject victoryPanel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +35,7 @@ public class OpenDoor : MonoBehaviour
 
             if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
             {
-                SceneManager.LoadScene(1);
+                SceneManager.LoadScene(nextSceneIndex);
             }
             else
             {
