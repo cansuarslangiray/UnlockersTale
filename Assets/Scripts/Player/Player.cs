@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -9,24 +6,28 @@ using UnityEngine.Serialization;
 public class Player : MonoBehaviour
 {
     public static int Coins = 0;
-    public float speedIncreaseInterval = 5.0f; // How often to increase speed.
+    public float speedIncreaseInterval = 5.0f;
     public float speedIncreaseAmount = 1.0f;
     public float maxPlayerSpeed = 25.0f;
     public float leftRightSpeed = 4f;
-    public float _currentSpeed;
+    public float currentSpeed;
     private float _timer;
+    public bool hasKey;
+    public GameObject endText;
+    public GameObject gameOverText;
+    public Animator doorAnimator;
+    public TextMeshProUGUI keyText;
+    public TextMeshProUGUI coinText;
     private CharacterController _playerCharacterController;
     private Animator _playerAnimator;
-    private bool _canTurnAgain;
     [SerializeField] private float levelLoadDelay = 1f;
     public GameObject deadTexture;
 
-    // Start is called before the first frame update
     void Start()
     {
         _playerCharacterController = GetComponent<CharacterController>();
         _timer = 0;
-        _currentSpeed = 3f;
+        currentSpeed = 3f;
         _playerAnimator = GetComponent<Animator>();
         if (SceneManager.GetActiveScene().name == "Level2")
         {
@@ -36,10 +37,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         Movement();
+        CheckEnd();
     }
 
     private void Movement()
@@ -47,15 +48,14 @@ public class Player : MonoBehaviour
         _timer += Time.deltaTime ;
         if (_timer >= speedIncreaseInterval)
         {
-            _currentSpeed += speedIncreaseAmount;
+            currentSpeed += speedIncreaseAmount;
             
-            _currentSpeed = Mathf.Min(_currentSpeed, maxPlayerSpeed);
-            Debug.Log(_currentSpeed +"speed aşıldı");
+            currentSpeed = Mathf.Min(currentSpeed, maxPlayerSpeed);
             _timer = 0f;
         }
 
 
-        _playerCharacterController.Move(transform.forward * _currentSpeed * Time.deltaTime);
+        _playerCharacterController.Move(transform.forward * currentSpeed * Time.deltaTime);
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             TurnLeft();
@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
 
     private void TurnLeft()
     {
-        if (transform.position.x > -3)
+        if (transform.position.x > -2)
         {
             _playerCharacterController.Move(Vector3.left * leftRightSpeed * Time.deltaTime);
         }
@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
 
     private void TurnRight()
     {
-        if (transform.position.x < 3)
+        if (transform.position.x < 2)
         {
             _playerCharacterController.Move(Vector3.right * leftRightSpeed * Time.deltaTime);
         }
@@ -84,13 +84,31 @@ public class Player : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.gameObject.CompareTag("Obsticle"))
+        if (hit.gameObject.CompareTag("Obstacle"))
         {
             hit.transform.GetComponent<Car>().speed = 0;
             transform.GetComponent<CharacterController>().enabled = false;
             deadTexture.SetActive(true);
             //  Time.timeScale = 0f;
             Invoke("LoadLevelAgain", 1.0f);
+        }
+        else if (hit.gameObject.CompareTag("Key"))
+        {
+            Destroy(hit.gameObject);
+            keyText.text = "1";
+            hasKey = true;
+        }
+        else if (hit.gameObject.CompareTag("EndDoor"))
+        {
+            gameOverText.SetActive(true);
+        }
+        else if (hit.gameObject.CompareTag("End"))
+        {
+            endText.SetActive(true);
+            transform.GetComponent<CharacterController>().enabled = false;
+            this.enabled = false;
+            coinText.text = "Total Coins: " + Coins.ToString();
+            Coins = 0;
         }
     }
 
@@ -99,7 +117,25 @@ public class Player : MonoBehaviour
         deadTexture.SetActive(false);
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         transform.GetComponent<CharacterController>().enabled = true;
-
         SceneManager.LoadScene(currentSceneIndex);
+    }
+
+    private void CheckEnd()
+    {
+        if (transform.position.z >= 650 && hasKey)
+        {
+            hasKey = false;
+            doorAnimator.SetTrigger("End");
+        }
+    }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(2);
+    }
+
+    public void TryAgain()
+    {
+        Invoke("LoadLevelAgain", 1.0f);
     }
 }

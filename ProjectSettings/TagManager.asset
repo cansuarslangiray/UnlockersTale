@@ -4,9 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Obsticle
   - Coin
   - Door
+  - Obstacle
+  - Key
+  - EndDoor
+  - End
   layers:
   - Default
   - TransparentFX

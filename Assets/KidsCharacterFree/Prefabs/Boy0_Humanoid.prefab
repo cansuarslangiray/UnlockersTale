@@ -897,9 +897,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4107167189488714126}
   - component: {fileID: 7935265684313906164}
+  - component: {fileID: 2787961801127601042}
   - component: {fileID: 4749856865434513452}
   - component: {fileID: 2571689292225610219}
-  - component: {fileID: 2787961801127601042}
   m_Layer: 0
   m_Name: Boy0_Humanoid
   m_TagString: Untagged
@@ -946,6 +946,31 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2787961801127601042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3725680173231446836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29639be74213ef844bcc613795c16ae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedIncreaseInterval: 20
+  speedIncreaseAmount: 20
+  maxPlayerSpeed: 200
+  leftRightSpeed: 3
+  _currentSpeed: 0
+  hasKey: 0
+  endText: {fileID: 0}
+  gameOverText: {fileID: 0}
+  doorAnimator: {fileID: 0}
+  keyText: {fileID: 0}
+  coinText: {fileID: 0}
+  levelLoadDelay: 1
+  deadTexture: {fileID: 0}
 --- !u!143 &4749856865434513452
 CharacterController:
   m_ObjectHideFlags: 0
@@ -987,24 +1012,6 @@ MonoBehaviour:
   walkSpeed: 2
   turnSpeed: 1.5
   runSpeed: 5
---- !u!114 &2787961801127601042
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3725680173231446836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29639be74213ef844bcc613795c16ae4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialSpeed: 3
-  speedIncreaseInterval: 20
-  speedIncreaseAmount: 20
-  maxPlayerSpeed: 200
-  leftRightSpeed: 3
-  levelLoadDelay: 1
 --- !u!1 &4260977703537881957
 GameObject:
   m_ObjectHideFlags: 0

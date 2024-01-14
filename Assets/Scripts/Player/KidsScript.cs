@@ -17,7 +17,6 @@ public class KidsScript : MonoBehaviour
   {
     if (SceneManager.GetActiveScene().name == "Room")
     {
-      gameObject.GetComponent<Player>().enabled = false;
       gameObject.GetComponent<KidsScript>().enabled = true;
     }
 

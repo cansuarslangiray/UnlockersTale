@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -30,7 +31,7 @@ public class GeneratePlatform : MonoBehaviour
             UpdatePlatform();
         }
 
-        CoinText.GetComponent<Text>().text = Player.Coins.ToString();
+        CoinText.GetComponent<TextMeshProUGUI>().text = Player.Coins.ToString();
     }
 
     private void GenerateSection()
