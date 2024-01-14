@@ -45,7 +45,7 @@ public class MazeRunner : MonoBehaviour
   IEnumerator CountDownToEnd(){
     while (countdownTime > 0 && continueCountDown) 
     {
-      countDownDisplay.text = countdownTime.ToString();
+      countDownDisplay.text = countdownTime.ToString();     
       yield return new WaitForSeconds(1f);
 
       countdownTime--;

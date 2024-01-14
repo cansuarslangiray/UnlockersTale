@@ -4471,7 +4471,7 @@ MonoBehaviour:
   turnSpeed: 1.5
   runSpeed: 5
   fillImage: {fileID: 807096818}
-  countdownTime: 5
+  countdownTime: 60
   countDownDisplay: {fileID: 546204861}
   gameOverPanel: {fileID: 651230654}
 --- !u!1001 &1980553114
